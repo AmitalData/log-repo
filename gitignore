@@ -224,7 +224,7 @@ PublishScripts/
 
 # NuGet Packages
 *.nupkg
-**/main/packages/*
+**/Logitude/packages/*
 # The packages folder can be ignored because of Package Restore
 # except build/, which is used as an MSBuild target.
 
@@ -356,4 +356,4 @@ __pycache__/
 
 
 # End of https://www.gitignore.io/api/windows,angular,visualstudio
-/main/AngularModules/LoginModules/bower_components
+/Logitude/AngularModules/LoginModules/bower_components
