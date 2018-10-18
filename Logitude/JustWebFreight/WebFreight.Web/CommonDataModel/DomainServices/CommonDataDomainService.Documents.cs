@@ -12,9 +12,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
-using WebFreight.Web.InfrastructureModel.DomainServices;
 using WebFreight.Web.Security;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
@@ -24,8 +22,6 @@ using Logitude.SystemLogs;
 using System.Web;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools;
-using System.Text;
-using System.Xml;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -33,15 +29,11 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
-using Logitude.BL.CommonDataModel.Tools.HybridMapping;
-using System.Threading;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Simplog.Server.Infrastructure.Azure; 
 using ICSharpCode.SharpZipLib.Zip;
-using ICSharpCode.SharpZipLib.Checksums;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
+using ICSharpCode.SharpZipLib.Checksum;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {

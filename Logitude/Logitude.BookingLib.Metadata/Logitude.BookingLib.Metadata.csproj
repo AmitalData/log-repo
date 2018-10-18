@@ -46,13 +46,14 @@
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AmazedSaint.Elastic">
-      <HintPath>..\General\Dlls\AmazedSaint.Elastic.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="AmazedSaint.Elastic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\General\Dlls\EntityFramework.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -76,9 +77,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElasticDemoGen.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ElasticDemoModel\ElasticDemoGen.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ElasticDemoGen.cs</LastGenOutput>
+    </Content>
+    <Content Include="ElasticDemoModel\ElasticDemoModel.xml" />
+    <Content Include="ElasticDemoModel\ReadMe-ElasticObject.cs.txt" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
       <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
@@ -124,6 +137,7 @@
     <None Include="EntityFiles\FlightsSchedulesRequest.lxml" />
     <None Include="EntityFiles\FlightsSchedulesRequestStatus.lxml" />
     <None Include="EntityFiles\FlightsSchedulesResponse.lxml" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

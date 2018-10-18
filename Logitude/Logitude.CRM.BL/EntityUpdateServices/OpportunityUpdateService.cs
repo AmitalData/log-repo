@@ -23,6 +23,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Azure;
 using Logitude.CRM.BL.Helpers;
 using System.Web;
+using System.Data.Entity.Core;
 
 namespace Logitude.CRM.BL.EntityUpdateServices
 {

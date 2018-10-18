@@ -11,7 +11,6 @@ using Logitude.CRM.BL.DataContracts;
 using Logitude.CRM.Data;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.Helpers;
-using System.Data.Objects;
 using Simplog.Server.Infrastructure;
 using Logitude.CRM.Data.EntityKeys;
 using Logitude.CRM.Data.BusinessUnitFilters;

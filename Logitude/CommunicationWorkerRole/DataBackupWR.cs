@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Microsoft.WindowsAzure.Storage;
 using System.Data.SqlClient;
 
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -14,17 +12,13 @@ using Simplog.Server.Infrastructure.Azure;
 
 using System.Threading;
 using System.Diagnostics;
-using Microsoft.WindowsAzure.ServiceRuntime;
 using System.Data;
-using System.Configuration;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
-using ICSharpCode.SharpZipLib.Checksums;
 
 
 using System.Transactions;
 using Microsoft.WindowsAzure.Storage.Queue;
-using Microsoft.WindowsAzure.Storage.Blob;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.SystemLogs;
 using Logitude.Server.Tools;

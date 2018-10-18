@@ -74,29 +74,26 @@
       <HintPath>..\..\packages\Autofac.WebApi.3.1.0\lib\net40\Autofac.Integration.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Devart.Data, Version=5.0.828.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\General\Dlls\Devart\Devart.Data.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Devart.Data, Version=5.0.895.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\General\Dlls\Devart\Devart.Data.Linq.dll</HintPath>
+      <HintPath>..\..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Devart.Data.Oracle, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\General\Dlls\Devart\Devart.Data.Oracle.dll</HintPath>
+      <HintPath>..\..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+    </Reference>
     <Reference Include="Devart.Data.Oracle.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\General\Dlls\Devart\Devart.Data.Oracle.Linq.dll</HintPath>
+      <HintPath>..\..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Web, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\General\Dlls\Devart\Devart.Data.Oracle.Web.dll</HintPath>
+      <HintPath>..\..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="DevDefined.OAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3261f5b4697e67d, processorArchitecture=MSIL">
@@ -108,27 +105,25 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\General\Dlls\EntityFramework.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\General\Dlls\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="evohtmltopdf, Version=5.17.0.0, Culture=neutral, PublicKeyToken=e1fcbb86597de299, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\General\Dlls\evohtmltopdf.dll</HintPath>
+    <Reference Include="evohtmltopdf, Version=7.5.0.0, Culture=neutral, PublicKeyToken=e1fcbb86597de299, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EvoHtmlToPdf_x64.7.5.0\lib\net40\evohtmltopdf.dll</HintPath>
     </Reference>
     <Reference Include="FormulaEngineLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\General\Dlls\Client References\SilverlightExpressions\FormulaEngineLib.dll</HintPath>
+      <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\FormulaEngineLib.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\General\Dlls\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="GramaticaSilverlight, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\GramaticaSilverlight.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\General\Dlls\ICSharpCode.SharpZipLib.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.8.8.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\HtmlAgilityPack.1.8.8\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.0.0.999, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpZipLib.1.0.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Intuit.Ipp.Core, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.Core.dll</HintPath>
@@ -186,11 +181,11 @@
       <HintPath>..\..\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.WebHooksService.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="itextsharp">
-      <HintPath>..\..\General\Dlls\Client References\itextsharp.dll</HintPath>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp.xtra">
-      <HintPath>..\..\General\Dlls\Client References\itextsharp.xtra.dll</HintPath>
+    <Reference Include="itextsharp.xtra, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\itextsharp.xtra.5.5.13\lib\itextsharp.xtra.dll</HintPath>
     </Reference>
     <Reference Include="Logitude.Infrastructure.Data">
       <HintPath>..\..\Logitude.Infrastructure.Data\bin\Debug\Logitude.Infrastructure.Data.dll</HintPath>
@@ -243,18 +238,17 @@
     <Reference Include="Microsoft.Owin.Security">
       <HintPath>..\..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\..\General\Dlls\Microsoft.Practices.Unity.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\WindowsAzure.ServiceBus.3.4.5\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting">
-      <HintPath>..\..\General\Dlls\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure">
-      <HintPath>..\..\General\Dlls\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Build2.WebApi, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.TeamFoundationServer.Client.16.136.1-preview\lib\net45\Microsoft.TeamFoundation.Build2.WebApi.dll</HintPath>
@@ -346,15 +340,14 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\General\Dlls\Profact 3.3\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\..\packages\Profact3.3.1.0.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid.SmtpApi, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\General\Dlls\Client References\SilverlightExpressions\SilverlightExpressions.dll</HintPath>
+      <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>
     </Reference>
     <Reference Include="Stimulsoft.Base, Version=2016.3.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -381,16 +374,16 @@
       <HintPath>..\..\General\Dlls\StimulSoft new\Stimulsoft.Report.WebDesign.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Calculate.Base, Version=10.104.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>..\..\General\Dlls\Client References\Syncfusion.Calculate.Base.dll</HintPath>
+      <HintPath>..\..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.Calculate.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Compression.Base">
-      <HintPath>..\..\General\Dlls\Client References\Syncfusion.Compression.Base.dll</HintPath>
+    <Reference Include="Syncfusion.Compression.Base, Version=10.104.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.Compression.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Core, Version=10.104.0.44, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
-      <HintPath>..\..\General\Dlls\Client References\Syncfusion.Core.dll</HintPath>
+      <HintPath>..\..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.XlsIO.Web">
-      <HintPath>..\..\General\Dlls\Client References\Syncfusion.XlsIO.Web.dll</HintPath>
+    <Reference Include="Syncfusion.XlsIO.Web, Version=10.104.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.XlsIO.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations">
       <Private>True</Private>
@@ -501,39 +494,38 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Telerik.Windows.Controls">
-      <HintPath>..\..\General\Dlls\Client References\Telerik-WPF\Telerik.Windows.Controls.dll</HintPath>
+    <Reference Include="Telerik.Windows.Controls, Version=2015.2.728.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik-WPF.1.0.0\lib\Net40\Telerik.Windows.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Controls.Data">
-      <HintPath>..\..\General\Dlls\Client References\Telerik-WPF\Telerik.Windows.Controls.Data.dll</HintPath>
+    <Reference Include="Telerik.Windows.Controls.Data, Version=2015.2.728.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik-WPF.1.0.0\lib\Net40\Telerik.Windows.Controls.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Controls.Input">
-      <HintPath>..\..\General\Dlls\Client References\Telerik-WPF\Telerik.Windows.Controls.Input.dll</HintPath>
+    <Reference Include="Telerik.Windows.Controls.Input, Version=2015.2.728.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik-WPF.1.0.0\lib\Net40\Telerik.Windows.Controls.Input.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents">
-      <HintPath>..\..\General\Dlls\Client References\Telerik-WPF\Telerik.Windows.Documents.dll</HintPath>
+    <Reference Include="Telerik.Windows.Documents, Version=2015.2.728.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik-WPF.1.0.0\lib\Net40\Telerik.Windows.Documents.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents.Core">
-      <HintPath>..\..\General\Dlls\Client References\Telerik-WPF\Telerik.Windows.Documents.Core.dll</HintPath>
+    <Reference Include="Telerik.Windows.Documents.Core, Version=2015.2.728.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik-WPF.1.0.0\lib\Net40\Telerik.Windows.Documents.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents.Fixed">
-      <HintPath>..\..\General\Dlls\Client References\Telerik-WPF\Telerik.Windows.Documents.Fixed.dll</HintPath>
+    <Reference Include="Telerik.Windows.Documents.Fixed, Version=2015.2.728.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik-WPF.1.0.0\lib\Net40\Telerik.Windows.Documents.Fixed.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents.Flow">
-      <HintPath>..\..\General\Dlls\Client References\Telerik-WPF\Telerik.Windows.Documents.Flow.dll</HintPath>
+    <Reference Include="Telerik.Windows.Documents.Flow, Version=2015.2.728.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik-WPF.1.0.0\lib\Net40\Telerik.Windows.Documents.Flow.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents.FormatProviders.Html">
-      <HintPath>..\..\General\Dlls\Client References\Telerik-WPF\Telerik.Windows.Documents.FormatProviders.Html.dll</HintPath>
+    <Reference Include="Telerik.Windows.Documents.FormatProviders.Html, Version=2015.2.728.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik-WPF.1.0.0\lib\Net40\Telerik.Windows.Documents.FormatProviders.Html.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents.FormatProviders.Xaml">
-      <HintPath>..\..\General\Dlls\Client References\Telerik-WPF\Telerik.Windows.Documents.FormatProviders.Xaml.dll</HintPath>
+    <Reference Include="Telerik.Windows.Documents.FormatProviders.Xaml, Version=2015.2.728.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Telerik-WPF.1.0.0\lib\Net40\Telerik.Windows.Documents.FormatProviders.Xaml.dll</HintPath>
     </Reference>
     <Reference Include="UltimatePdf, Version=3.5.404.1253, Culture=neutral, PublicKeyToken=0efede2d78b28dff, processorArchitecture=MSIL">
-      <HintPath>..\..\General\Dlls\UltimatePdf.dll</HintPath>
+      <HintPath>..\..\packages\UltimatePDF.1.0.0\lib\Net40\UltimatePdf.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\General\Dlls\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.2.0.0\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>

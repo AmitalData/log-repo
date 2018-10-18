@@ -49,36 +49,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Devart.Data, Version=5.0.895.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\Devart\Devart.Data.dll</HintPath>
+      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\Devart\Devart.Data.Linq.dll</HintPath>
+      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.dll</HintPath>
+      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Entity.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Entity.Migrations, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Entity.Migrations.dll</HintPath>
+      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Entity.Migrations.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Entity.Spatials, Version=8.2.103.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Entity.Spatials.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Entity.Spatials, Version=8.2.103.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Entity.Spatials.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Linq.dll</HintPath>
+      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Web, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Web.dll</HintPath>
+      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -86,12 +78,17 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\General\Dlls\Microsoft.Practices.Unity.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ServiceBus, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\Microsoft.ServiceBus.dll</HintPath>
+    <Reference Include="Microsoft.ServiceBus, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
@@ -118,11 +115,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnifreightIIG.UServer">
-      <HintPath>..\General\Dlls\UnifreightIIG.UServer.dll</HintPath>
-    </Reference>
-    <Reference Include="WebFreight.Web">
-      <HintPath>..\JustWebFreight\WebFreight.Web\bin\WebFreight.Web.dll</HintPath>
+    <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnifreightIIG.1.0.0\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>

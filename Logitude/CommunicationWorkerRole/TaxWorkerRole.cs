@@ -7,7 +7,6 @@ using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using ICSharpCode.SharpZipLib.Checksums;
 using ICSharpCode.SharpZipLib.Zip;
 using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
@@ -26,6 +25,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.TaxesApprovalModel;
 using Logitude.Server.Tools;
+using ICSharpCode.SharpZipLib.Checksum;
 
 namespace CommunicationWorkerRole
 {

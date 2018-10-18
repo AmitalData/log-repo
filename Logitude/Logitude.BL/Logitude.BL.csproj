@@ -53,18 +53,22 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="evohtmltopdf">
-      <HintPath>..\General\Dlls\evohtmltopdf.dll</HintPath>
+    <Reference Include="evohtmltopdf, Version=7.5.0.0, Culture=neutral, PublicKeyToken=e1fcbb86597de299, processorArchitecture=MSIL">
+      <HintPath>..\packages\EvoHtmlToPdf_x64.7.5.0\lib\net40\evohtmltopdf.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack">
-      <HintPath>..\General\Dlls\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="FormulaEngineLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SilverlightExpression.1.0.0\lib\Net40\FormulaEngineLib.dll</HintPath>
+    </Reference>
+    <Reference Include="GramaticaSilverlight, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SilverlightExpression.1.0.0\lib\Net40\GramaticaSilverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.8.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Intuit.Ipp.Core, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.Core.dll</HintPath>
@@ -122,11 +126,14 @@
       <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.WebHooksService.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Logitude.CRM.BL">
-      <HintPath>..\General\Dlls\LogitudeOldDlls\Logitude.CRM.BL.dll</HintPath>
+    <Reference Include="Logitude.Accounting.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LogitudeOldDlls.1.0.0\lib\Net40\Logitude.Accounting.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Logitude.Customs.BL">
-      <HintPath>..\General\Dlls\LogitudeOldDlls\Logitude.Customs.BL.dll</HintPath>
+    <Reference Include="Logitude.CRM.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LogitudeOldDlls.1.0.0\lib\Net40\Logitude.CRM.BL.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.Customs.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LogitudeOldDlls.1.0.0\lib\Net40\Logitude.Customs.BL.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
@@ -144,12 +151,17 @@
       <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\General\Dlls\Microsoft.Practices.Unity.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WindowsAzure.ServiceBus.3.4.4\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\WindowsAzure.ServiceBus.3.4.5\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
@@ -170,11 +182,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\Profact 3.3\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\packages\Profact3.3.1.0.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
-    <Reference Include="SilverlightExpressions">
-      <HintPath>..\General\Dlls\Client References\SilverlightExpressions\SilverlightExpressions.dll</HintPath>
+    <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -2407,10 +2418,6 @@
     <Compile Include="Validators\ValidationClass.Shared.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
-      <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
-      <Name>Logitude.Accounting.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
       <Project>{91564685-7ee1-466d-afcd-183a1bf62259}</Project>
       <Name>Logitude.Accounting.Def</Name>

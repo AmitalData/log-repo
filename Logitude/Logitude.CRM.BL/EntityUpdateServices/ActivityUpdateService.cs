@@ -18,6 +18,7 @@ using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.Core;
 
 namespace Logitude.CRM.BL.EntityUpdateServices
 {

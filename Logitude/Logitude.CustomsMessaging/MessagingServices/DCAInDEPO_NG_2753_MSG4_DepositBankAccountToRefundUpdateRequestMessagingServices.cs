@@ -5,6 +5,7 @@
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.RequestServices;
+using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using UnifreightIIG.Common.MessageLib.Deposit;
@@ -24,7 +25,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public class DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices : MessagingServiceBase<
         GenericRequestParams,INF_MSG_GenericResponseData,
         DCAInCustomRequest,DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequest,
-        DCAInCustomRequestService, Logitude.CustomsMessaging.ResponseServices.DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService, 
+        DCAInCustomRequestService, DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService, 
         DCAInRequestHeader>
     {
         protected override DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequest CallWS(DCAInCustomRequest customRequest, GenericRequestParams requestParams, out string exceptionMessage)

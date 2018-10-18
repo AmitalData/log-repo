@@ -14,7 +14,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
-using System.Data.Objects;
 using Logitude.CRM.Data.BusinessUnitFilters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.CRM.BL.EntityDws;
