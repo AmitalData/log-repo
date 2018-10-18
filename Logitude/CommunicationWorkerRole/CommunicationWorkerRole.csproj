@@ -259,18 +259,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Simplog.Server.Infrastructure\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Base, Version=2018.1.6.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\StimulSoft new\Stimulsoft.Base.dll</HintPath>
+    <Reference Include="Stimulsoft.Base, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Controls, Version=2012.1.1300.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\Stimulsoft.Controls.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Stimulsoft.Controls, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Report, Version=2018.1.6.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\General\Dlls\StimulSoft new\Stimulsoft.Report.dll</HintPath>
+    <Reference Include="Stimulsoft.Report, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Report.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
